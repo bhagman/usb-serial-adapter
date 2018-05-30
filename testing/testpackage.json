@@ -1,0 +1,145 @@
+{
+  "name": "usb-serial-adapter",
+  "version": "1.0.0",
+  "description": "Oryng Wiring (aka Arduino) Framework PackedSerial Adapter. Allows lightweight devices, such as Arduino UNO, to communicate with a Thing gateway over a USB serial port.",
+  "main": "index.js",
+  "keywords": [
+    "arduino",
+    "oryng",
+    "wiring",
+    "iot",
+    "adapter",
+    "serial",
+    "usb"
+  ],
+  "author": "Brett Hagman",
+  "license": "MIT",
+  "homepage": "https://github.com/bhagman/usb-serial-adapter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bhagman/usb-serial-adapter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bhagman/usb-serial-adapter/issues"
+  },
+  "dependencies": {
+    "ajv": "^6.5.0",
+    "cobs": "^0.2.1",
+    "serialport": "^6.1.1"
+  },
+  "files": [
+    "index.js",
+    "usb-serial-adapter.js",
+    "usb-serial-board.js",
+    "usb-serial-device.js",
+    "usb-serial-property.js",
+    "usb-serial-lookup.js",
+    "package.json"
+  ],
+  "moziot": {
+    "api": {
+      "min": 1,
+      "max": 2
+    },
+    "plugin": true,
+    "exec": "{nodeLoader} {path}",
+    "config": {
+      "portSelectors": [
+        {
+          "name": "Arduino",
+          "manufacturer": "Arduino",
+          "use": "true"
+        },
+        {
+          "name": "Generic ttyACM0 (Linux)",
+          "comName": "/dev/ttyACM0",
+          "use": "true"
+        },
+        {
+          "name": "Generic ttyACM1 (Linux)",
+          "comName": "/dev/ttyACM1",
+          "use": "true"
+        },
+        {
+          "name": "Generic ttyUSB0 (Linux)",
+          "comName": "/dev/ttyUSB0",
+          "use": "true"
+        },
+        {
+          "name": "Generic COM16 (Windows)",
+          "comName": "COM16",
+          "use": "true"
+        },
+        {
+          "name": "Generic COM24 (Windows)",
+          "comName": "COM24",
+          "use": "true"
+        },
+        {
+          "name": "Generic ttycu.usb0 (OSX)",
+          "comName": "/dev/ttycu.usb0",
+          "use": "true"
+        }
+      ]
+    },
+    "schema": {
+      "title": "USB Serial Port Selection",
+      "description": "Add USB serial port information below to talk to Things over PackedSerial.",
+      "type": "object",
+      "properties": {
+        "portSelectors": {
+          "title": "USB Serial Port",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "manufacturer": {
+                "title": "Manufacturer Name",
+                "description": "Matches all ports containing this manufacturer name",
+                "type": "string"
+              },
+              "vendorId": {
+                "title": "Vendor ID (VID)",
+                "description": "Matches all ports containing this USB Vendor ID (VID)",
+                "type": "string"
+              },
+              "productId": {
+                "title": "Product ID (PID)",
+                "description": "Matches all ports containing this USB Product ID (PID)",
+                "type": "string"
+              },
+              "serialNumber": {
+                "title": "Serial Number",
+                "type": "string"
+              },
+              "comName": {
+                "title": "System Port Name",
+                "description": "examples: COM4, or /dev/ttyUSB0",
+                "type": "string"
+              },
+              "baudRate": {
+                "title": "Bit rate/Baud rate",
+                "description": "examples: 9600, 115200, or 1000000",
+                "type": "integer",
+                "minimum": 0
+              },
+              "use": {
+                "title": "Use",
+                "description": "Use this selector",
+                "type": "boolean",
+                "default": "true"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
